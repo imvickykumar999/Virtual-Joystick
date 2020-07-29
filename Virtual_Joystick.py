@@ -1,7 +1,6 @@
 import cv2, imutils
 import numpy as np
 import math, time
-import pyvjoy
 import ctypes
 
 SendInput = ctypes.windll.user32.SendInput
@@ -61,16 +60,19 @@ def ReleaseKey(hexKeyCode):
     ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
 
 def xAxis(angle):
+    
     if angle>20:
         PressKey(A)
         time.sleep(.1)
         ReleaseKey(D)
         time.sleep(.1)
+        
     elif angle<-20:
         PressKey(D)
         time.sleep(.1)
         ReleaseKey(A)
         time.sleep(.1)
+        
     else:
         print('W is pressed')
         PressKey(W)
@@ -104,9 +106,11 @@ while(1):
     converted=cv2.cvtColor(img,cv2.COLOR_BGR2HSV) #convert BGR image to HSV image
     skinMask=cv2.inRange(converted,lower,upper) 
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
+    
     skinMask=cv2.morphologyEx(skinMask,cv2.MORPH_CLOSE,kernel)
     skinMask = cv2.dilate(skinMask, kernel, iterations = 4)
     skinMask = cv2.GaussianBlur(skinMask, (7,7), 0)
+    
     skin=cv2.bitwise_and(img,img,mask=skinMask)
     contours = cv2.findContours(skinMask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours = contours[0]
@@ -121,10 +125,12 @@ while(1):
             if area in range(6000,13000):
                 m1=cv2.moments(contours[0])
                 m2=cv2.moments(contours[1])
+                
                 x1=int(m1["m10"]/m1["m00"])
                 y1=int(m1["m01"]/m1["m00"])
                 x2=int(m2["m10"]/m2["m00"])
                 y2=int(m2["m01"]/m2["m00"])
+                
                 slope=math.tan(((y2-y1)/(x2-x1)))*100
                 slope=round(slope,2)
 
@@ -153,7 +159,6 @@ while(1):
                 if area>13000 and len(contours)==1:
                     cv2.putText(im,"BRAKE",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),4)  
                     Brake()
-
     except:
         pass
 
