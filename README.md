@@ -1,6 +1,8 @@
 # Virtual-Joystick
 ...playing JustCause4 PC Game Virtually.
 
+[![Watch the video](https://github.com/imvickykumar999/Virtual-Joystick/blob/master/screenshot.jpg)](https://www.linkedin.com/feed/update/urn:li:activity:6693779528709357568/)
+
 LinkedIn Post : https://www.linkedin.com/feed/update/urn:li:activity:6693779528709357568/
 =================================
 
